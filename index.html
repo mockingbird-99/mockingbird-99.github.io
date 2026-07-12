@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeremiah Tindana — SOC Analyst</title>
+<meta name="description" content="Jeremiah Tindana — Tier 1 SOC Analyst portfolio. Alert triage, threat detection, incident response.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* =========================================================
+     COLOR + TYPE TOKENS
+     Edit these variables to change the whole site's look at once.
+     ========================================================= */
+  :root {
+    --bg:        #0B1220;   /* main background — deep console navy */
+    --panel:     #121B2E;   /* card/panel background */
+    --panel-2:   #172136;   /* slightly lighter panel, for hover/alt rows */
+    --border:    #26314A;   /* hairline borders */
+    --text:      #E4E9F2;   /* primary text */
+    --text-dim:  #8A94A6;   /* secondary/muted text */
+    --accent-ok:    #3FB68B; /* teal-green — "clear" / done status */
+    --accent-warn:  #E8A33D; /* amber — "in progress" / attention status */
+    --accent-crit:  #E15554; /* red — reserved, used sparingly */
+
+    --font-display: 'JetBrains Mono', monospace;
+    --font-body:    'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  ::selection { background: var(--accent-warn); color: #0B1220; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-warn);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* =========================================================
+     STATUS TICKER — the signature element.
+     A scrolling strip that reads like a live monitoring feed.
+     Edit the <span> items inside #ticker-track to change the messages.
+     ========================================================= */
+  .ticker {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 8px 0;
+  }
+  .ticker-track {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--text-dim);
+    animation: scroll-ticker 32s linear infinite;
+  }
+  .ticker-track span { margin-right: 48px; }
+  .ticker-track .ok   { color: var(--accent-ok); }
+  .ticker-track .warn { color: var(--accent-warn); }
+  @keyframes scroll-ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+  }
+
+  /* =========================================================
+     HEADER / HERO
+     ========================================================= */
+  header.hero {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--accent-ok);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent-ok);
+    box-shadow: 0 0 0 3px rgba(63,182,139,0.15);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .role-line {
+    font-size: 18px;
+    color: var(--text-dim);
+    margin: 0 0 28px;
+  }
+  .profile-text {
+    max-width: 640px;
+    color: var(--text);
+    font-size: 15.5px;
+  }
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .contact-row a {
+    font-family: var(--font-display);
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 3px;
+    color: var(--text);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .contact-row a:hover {
+    border-color: var(--accent-ok);
+    color: var(--accent-ok);
+  }
+
+  /* =========================================================
+     SECTIONS (shared)
+     ========================================================= */
+  section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--text);
+  }
+
+  /* Skills grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .skill-panel {
+    background: var(--panel);
+    padding: 20px;
+  }
+  .skill-panel h3 {
+    font-family: var(--font-display);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-warn);
+    margin: 0 0 12px;
+  }
+  .skill-panel ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+  .skill-panel li { padding: 3px 0; }
+
+  /* Experience */
+  .job {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+  }
+  .job:first-child { border-top: none; padding-top: 0; }
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .job-title {
+    font-weight: 600;
+    font-size: 15.5px;
+  }
+  .job-org { color: var(--text-dim); font-size: 14px; }
+  .job-date {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .job ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    font-size: 14.5px;
+    color: var(--text);
+  }
+  .job li { margin-bottom: 6px; }
+
+  /* Certifications */
+  .cert-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    border-radius: 3px;
+  }
+  .cert-name { font-size: 14.5px; }
+  .cert-org { color: var(--text-dim); font-size: 13px; }
+  .status-badge {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .status-badge.done {
+    color: var(--accent-ok);
+    background: rgba(63,182,139,0.12);
+    border: 1px solid rgba(63,182,139,0.3);
+  }
+  .status-badge.progress {
+    color: var(--accent-warn);
+    background: rgba(232,163,61,0.12);
+    border: 1px solid rgba(232,163,61,0.3);
+  }
+
+  /* Write-ups / Projects */
+  .writeup-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 22px;
+    margin-bottom: 14px;
+  }
+  .writeup-empty {
+    background: var(--panel);
+    border: 1px dashed var(--border);
+    border-radius: 3px;
+    padding: 32px 22px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .writeup-empty .mono {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--accent-warn);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 0 60px;
+    text-align: center;
+    color: var(--text-dim);
+    font-family: var(--font-display);
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    header.hero { padding: 48px 0 40px; }
+    section { padding: 40px 0; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ STATUS TICKER (edit messages here) ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker-track">
+      <span class="ok">● MONITORING: ACTIVE</span>
+      <span>SIEM: Splunk</span>
+      <span>LAST TRIAGE: Ongoing</span>
+      <span class="warn">CERT: Cisco CyberOps — IN PROGRESS</span>
+      <span>FRAMEWORKS: MITRE ATT&amp;CK · NIST 800-53 · ISO 27001</span>
+      <span class="ok">● MONITORING: ACTIVE</span>
+      <span>SIEM: Splunk</span>
+      <span>LAST TRIAGE: Ongoing</span>
+      <span class="warn">CERT: Cisco CyberOps — IN PROGRESS</span>
+      <span>FRAMEWORKS: MITRE ATT&amp;CK · NIST 800-53 · ISO 27001</span>
+    </div>
+  </div>
+
+  <!-- ============ HEADER / HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Available for Tier 1 SOC roles</div>
+      <h1>Jeremiah Tindana</h1>
+      <p class="role-line">SOC Analyst — Alert Triage · Threat Detection · Incident Response</p>
+      <p class="profile-text">
+        BEng Electrical Engineer and PSAA-certified SOC Analyst with real-time monitoring
+        and alert triage experience. Skilled in SIEM monitoring (Splunk), network traffic
+        analysis (Wireshark), endpoint investigation (Sysmon), and digital forensics
+        (Volatility, FTK Imager). Engineering background supports structured, methodical
+        incident response and detection work.
+      </p>
+      <div class="contact-row">
+        <a href="mailto:jeremiahtindana@gmail.com">EMAIL</a>
+        <a href="http://www.linkedin.com/in/jeremiah-tindana-2a9188195" target="_blank" rel="noopener">LINKEDIN</a>
+        <a href="https://github.com/mockingbird-99" target="_blank" rel="noopener">GITHUB</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>Skills &amp; Tools</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-panel">
+          <h3>SIEM &amp; Monitoring</h3>
+          <ul>
+            <li>Splunk</li>
+            <li>Alert triage &amp; escalation</li>
+            <li>Sysmon / event logs</li>
+          </ul>
+        </div>
+        <div class="skill-panel">
+          <h3>Network &amp; IDS</h3>
+          <ul>
+            <li>Wireshark</li>
+            <li>TCPDump</li>
+            <li>Snort</li>
+            <li>YARA</li>
+          </ul>
+        </div>
+        <div class="skill-panel">
+          <h3>Forensics</h3>
+          <ul>
+            <li>Volatility</li>
+            <li>FTK Imager</li>
+          </ul>
+        </div>
+        <div class="skill-panel">
+          <h3>Frameworks &amp; GRC</h3>
+          <ul>
+            <li>MITRE ATT&amp;CK</li>
+            <li>Cyber Kill Chain</li>
+            <li>NIST SP 800-53</li>
+            <li>ISO 27001</li>
+          </ul>
+        </div>
+        <div class="skill-panel">
+          <h3>Scripting &amp; Data</h3>
+          <ul>
+            <li>Python (data analysis)</li>
+            <li>SQL</li>
+            <li>Advanced Excel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WRITE-UPS / PROJECTS ============ -->
+  <section id="writeups">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Investigation Write-ups</h2>
+      </div>
+
+      <!--
+        TEMPLATE for the next write-up — copy this block, fill it in,
+        and place it above the existing card (newest first).
+
+      <div class="writeup-card">
+        <div class="job-head">
+          <span class="job-title">[short case name]</span>
+          <span class="job-date">[Month Year]</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14px; margin:8px 0 12px;">
+          One or two sentence summary.
+        </p>
+        <a href="writeups/[filename].pdf" target="_blank" rel="noopener"
+           style="font-family:var(--font-display); font-size:12px; color:var(--accent-ok);">
+           READ FULL REPORT →
+        </a>
+      </div>
+      -->
+
+      <div class="writeup-card">
+        <div class="job-head">
+          <span class="job-title">Chase Bank Impersonation — Phishing Analysis</span>
+          <span class="job-date">May 2024</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14px; margin:8px 0 12px;">
+          Header analysis and IOC extraction on a spoofed Chase Bank alert. Identified reply-to/return-path
+          mismatch, SPF/DMARC weakness, and mapped findings to MITRE ATT&amp;CK (T1566.002, T1656).
+        </p>
+        <a href="writeups/chase-bank-impersonation.pdf" target="_blank" rel="noopener"
+           style="font-family:var(--font-display); font-size:12px; color:var(--accent-ok);">
+           READ FULL REPORT →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Experience &amp; Training</h2>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div>
+            <div class="job-title">Surveillance &amp; Monitoring Officer</div>
+            <div class="job-org">Stellar Logistics Ltd</div>
+          </div>
+          <div class="job-date">2024 — 2026</div>
+        </div>
+        <ul>
+          <li>Triaged and prioritised high-volume real-time alerts across live tracking systems, escalating confirmed incidents — mirroring Tier 1 SOC alert-handling workflows.</li>
+          <li>Reduced missed critical alerts by 70% through structured alert handling and prioritisation improvements.</li>
+          <li>Cut false-positive rate by 80% through alert logic optimisation, reducing analyst fatigue.</li>
+          <li>Produced daily incident logs and shift handover reports.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div>
+            <div class="job-title">Self-Directed Cybersecurity Training — SOC, DFIR &amp; GRC</div>
+            <div class="job-org">TCM Security Academy (Remote)</div>
+          </div>
+          <div class="job-date">2024 — Present</div>
+        </div>
+        <ul>
+          <li>Monitored and analysed security events using Splunk; investigated phishing emails, malicious attachments, and endpoint activity across Windows and Linux.</li>
+          <li>Performed network traffic analysis using Wireshark and TCPDump; developed YARA rules for malware detection and threat hunting.</li>
+          <li>Conducted forensic investigations using Volatility and FTK Imager to identify indicators of compromise.</li>
+          <li>Applied MITRE ATT&amp;CK to classify attack behaviours; produced incident reports simulating real SOC workflows.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div>
+            <div class="job-title">Data Analyst</div>
+            <div class="job-org">ALX – Udacity</div>
+          </div>
+          <div class="job-date">May 2022 — Nov 2022</div>
+        </div>
+        <ul>
+          <li>Cleaned, modelled, and analysed large datasets using Python to identify trends and produce data-driven insights.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div>
+            <div class="job-title">Research &amp; Teaching Assistant</div>
+            <div class="job-org">University of Energy and Natural Resources</div>
+          </div>
+          <div class="job-date">2020 — 2024</div>
+        </div>
+        <ul>
+          <li>Delivered practical sessions in networking and data communications to 600+ students.</li>
+          <li>Supported research projects in networking and wireless communications.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section id="certs">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Certifications</h2>
+      </div>
+
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Practical SOC Analyst Associate (PSAA)</div>
+          <div class="cert-org">TCM Security</div>
+        </div>
+        <span class="status-badge done">COMPLETE</span>
+      </div>
+
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Cisco CyberOps Associate</div>
+          <div class="cert-org">Cisco</div>
+        </div>
+        <span class="status-badge progress">IN PROGRESS</span>
+      </div>
+
+      <div class="cert-row" style="border-top:none;">
+        <div>
+          <div class="cert-name">BSc Electrical and Electronic Engineering</div>
+          <div class="cert-org">University of Energy and Natural Resources</div>
+        </div>
+        <span class="status-badge done">COMPLETE</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      © <span id="year"></span> Jeremiah Tindana — Built &amp; maintained by hand.
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
