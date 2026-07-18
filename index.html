@@ -268,17 +268,89 @@
     border: 1px solid rgba(232,163,61,0.3);
   }
 
+  /* =========================================================
+     ANIMATION — hero entrance + scroll reveal
+     ========================================================= */
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  header.hero .eyebrow      { animation: fade-in-up 0.6s ease both; }
+  header.hero h1            { animation: fade-in-up 0.6s ease both 0.08s; }
+  header.hero .role-line    { animation: fade-in-up 0.6s ease both 0.16s; }
+  header.hero .profile-text { animation: fade-in-up 0.6s ease both 0.24s; }
+  header.hero .contact-row  { animation: fade-in-up 0.6s ease both 0.32s; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .skill-panel, .job, .cert-row, .writeup-card {
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .skill-panel:hover, .cert-row:hover, .writeup-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-ok);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    header.hero .eyebrow, header.hero h1, header.hero .role-line,
+    header.hero .profile-text, header.hero .contact-row,
+    .reveal { animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+
   /* Write-ups / Projects */
-  .writeup-group + .writeup-group { margin-top: 32px; }
-  .writeup-group-title {
+  .writeup-group + .writeup-group { margin-top: 14px; }
+  .writeup-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 2px;
+    margin: 0 0 0;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text);
+  }
+  .writeup-toggle-label {
     font-family: var(--font-display);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--accent-warn);
-    margin: 0 0 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+  }
+  .writeup-count {
+    color: var(--text-dim);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
+    margin-left: 6px;
+  }
+  .writeup-toggle:hover .writeup-toggle-label { color: var(--accent-ok); }
+  .writeup-chevron {
+    font-family: var(--font-display);
+    color: var(--text-dim);
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+  .writeup-toggle[aria-expanded="true"] .writeup-chevron { transform: rotate(90deg); }
+  .writeup-group-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    padding-top: 0;
+  }
+  .writeup-group-content.open { opacity: 1; padding-top: 14px; }
+  .writeup-group-content .writeup-card {
+    animation: fade-in-up 0.35s ease both;
   }
   .writeup-card {
     background: var(--panel);
@@ -328,12 +400,12 @@
       <span class="ok">● MONITORING: ACTIVE</span>
       <span>SIEM: Splunk</span>
       <span>LAST TRIAGE: Ongoing</span>
-      <span class="warn">CERT: Cisco CyberOps — IN PROGRESS</span>
+      <span class="warn">CERT: BTL1 — IN PROGRESS</span>
       <span>FRAMEWORKS: MITRE ATT&amp;CK · NIST 800-53 · ISO 27001</span>
       <span class="ok">● MONITORING: ACTIVE</span>
       <span>SIEM: Splunk</span>
       <span>LAST TRIAGE: Ongoing</span>
-      <span class="warn">CERT: Cisco CyberOps — IN PROGRESS</span>
+      <span class="warn">CERT: BTL1 — IN PROGRESS</span>
       <span>FRAMEWORKS: MITRE ATT&amp;CK · NIST 800-53 · ISO 27001</span>
     </div>
   </div>
@@ -345,7 +417,7 @@
       <h1>Jeremiah Tindana</h1>
       <p class="role-line">SOC Analyst — Alert Triage · Threat Detection · Incident Response</p>
       <p class="profile-text">
-        BEng Electrical Engineer and PSAA-certified SOC Analyst with real-time monitoring
+        BSc Electrical Engineer and PSAA-certified SOC Analyst with real-time monitoring
         and alert triage experience. Skilled in SIEM monitoring (Splunk), network traffic
         analysis (Wireshark), endpoint investigation (Sysmon), and digital forensics
         (Volatility, FTK Imager). Engineering background supports structured, methodical
@@ -360,7 +432,7 @@
   </header>
 
   <!-- ============ SKILLS ============ -->
-  <section id="skills">
+  <section id="skills" class="reveal">
     <div class="wrap">
       <div class="section-head">
         <span class="section-num">01</span>
@@ -401,6 +473,14 @@
           </ul>
         </div>
         <div class="skill-panel">
+          <h3>Phishing &amp; Email Analysis</h3>
+          <ul>
+            <li>Header analysis (SPF/DKIM/DMARC)</li>
+            <li>URL &amp; domain reputation (VirusTotal, Talos)</li>
+            <li>Malicious attachment triage</li>
+          </ul>
+        </div>
+        <div class="skill-panel">
           <h3>Scripting &amp; Data</h3>
           <ul>
             <li>Python (data analysis)</li>
@@ -413,7 +493,7 @@
   </section>
 
   <!-- ============ WRITE-UPS / PROJECTS ============ -->
-  <section id="writeups">
+  <section id="writeups" class="reveal">
     <div class="wrap">
       <div class="section-head">
         <span class="section-num">02</span>
@@ -441,7 +521,11 @@
       -->
 
       <div class="writeup-group">
-      <h3 class="writeup-group-title">Network &amp; Log Analysis</h3>
+      <button class="writeup-toggle" type="button" aria-expanded="false" data-target="group-network">
+        <span class="writeup-toggle-label">Network &amp; Log Analysis <span class="writeup-count">(1)</span></span>
+        <span class="writeup-chevron">▸</span>
+      </button>
+      <div class="writeup-group-content" id="group-network">
 
       <div class="writeup-card">
         <div class="job-head">
@@ -462,9 +546,14 @@
       </div>
 
       </div>
+      </div>
 
       <div class="writeup-group">
-      <h3 class="writeup-group-title">Phishing &amp; Email Analysis</h3>
+      <button class="writeup-toggle" type="button" aria-expanded="false" data-target="group-phishing">
+        <span class="writeup-toggle-label">Phishing &amp; Email Analysis <span class="writeup-count">(5)</span></span>
+        <span class="writeup-chevron">▸</span>
+      </button>
+      <div class="writeup-group-content" id="group-phishing">
 
       <div class="writeup-card">
         <div class="job-head">
@@ -550,11 +639,12 @@
       </div>
 
       </div>
+      </div>
     </div>
   </section>
 
   <!-- ============ EXPERIENCE ============ -->
-  <section id="experience">
+  <section id="experience" class="reveal">
     <div class="wrap">
       <div class="section-head">
         <span class="section-num">03</span>
@@ -623,7 +713,7 @@
   </section>
 
   <!-- ============ CERTIFICATIONS ============ -->
-  <section id="certs">
+  <section id="certs" class="reveal">
     <div class="wrap">
       <div class="section-head">
         <span class="section-num">04</span>
@@ -640,8 +730,8 @@
 
       <div class="cert-row">
         <div>
-          <div class="cert-name">Cisco CyberOps Associate</div>
-          <div class="cert-org">Cisco</div>
+          <div class="cert-name">BTL1 (Blue Team Level 1)</div>
+          <div class="cert-org">Security Blue Team</div>
         </div>
         <span class="status-badge progress">IN PROGRESS</span>
       </div>
@@ -664,6 +754,45 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll-reveal for sections
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Write-up group accordions
+    document.querySelectorAll('.writeup-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = document.getElementById(btn.dataset.target);
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        if (isOpen) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          requestAnimationFrame(() => {
+            content.style.maxHeight = '0px';
+            content.classList.remove('open');
+          });
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          content.classList.add('open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          btn.setAttribute('aria-expanded', 'true');
+          content.addEventListener('transitionend', function handler(e) {
+            if (e.propertyName === 'max-height') {
+              content.style.maxHeight = 'none';
+              content.removeEventListener('transitionend', handler);
+            }
+          });
+        }
+      });
+    });
   </script>
 
 </body>
