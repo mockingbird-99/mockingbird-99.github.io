@@ -269,6 +269,17 @@
   }
 
   /* Write-ups / Projects */
+  .writeup-group + .writeup-group { margin-top: 32px; }
+  .writeup-group-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-warn);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
   .writeup-card {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -411,7 +422,8 @@
 
       <!--
         TEMPLATE for the next write-up — copy this block, fill it in,
-        and place it above the existing card (newest first).
+        and place it above the existing card (newest first) within the
+        correct subsection (Phishing & Email Analysis / Network & Log Analysis).
 
       <div class="writeup-card">
         <div class="job-head">
@@ -427,6 +439,32 @@
         </a>
       </div>
       -->
+
+      <div class="writeup-group">
+      <h3 class="writeup-group-title">Network &amp; Log Analysis</h3>
+
+      <div class="writeup-card">
+        <div class="job-head">
+          <span class="job-title">Lumma Looming — Info-Stealer PCAP Analysis</span>
+          <span class="job-date">May 2024</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14px; margin:8px 0 12px;">
+          Analyzed a tcpdump capture flagged for abnormal outbound behavior. Identified a
+          TeslaBrowser/5.5 user-agent matching Lumma Stealer's documented C2 signature, traced
+          its redirect through Telegram infrastructure, and separately found automated FTP
+          credential brute-forcing and file retrieval from the same host. Mapped to MITRE
+          ATT&amp;CK (T1071.001, T1102, T1110.001, T1041).
+        </p>
+        <a href="writeups/lumma-looming.pdf" target="_blank" rel="noopener"
+           style="font-family:var(--font-display); font-size:12px; color:var(--accent-ok);">
+           READ FULL REPORT →
+        </a>
+      </div>
+
+      </div>
+
+      <div class="writeup-group">
+      <h3 class="writeup-group-title">Phishing &amp; Email Analysis</h3>
 
       <div class="writeup-card">
         <div class="job-head">
@@ -509,6 +547,8 @@
            style="font-family:var(--font-display); font-size:12px; color:var(--accent-ok);">
            READ FULL REPORT →
         </a>
+      </div>
+
       </div>
     </div>
   </section>
