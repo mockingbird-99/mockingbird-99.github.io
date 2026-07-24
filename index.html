@@ -522,10 +522,27 @@
 
       <div class="writeup-group">
       <button class="writeup-toggle" type="button" aria-expanded="false" data-target="group-network">
-        <span class="writeup-toggle-label">Network &amp; Log Analysis <span class="writeup-count">(1)</span></span>
+        <span class="writeup-toggle-label">Network &amp; Log Analysis <span class="writeup-count">(2)</span></span>
         <span class="writeup-chevron">▸</span>
       </button>
       <div class="writeup-group-content" id="group-network">
+
+      <div class="writeup-card">
+        <div class="job-head">
+          <span class="job-title">Attack of the Bots — DNS Tunneling &amp; Multi-Stage Payload Analysis</span>
+          <span class="job-date">May 2023</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14px; margin:8px 0 12px;">
+          Investigated a Wireshark capture flagged for abnormal traffic volume. Identified sustained
+          DNS TXT-record tunneling to a malicious domain, a PowerShell-initiated HTTP download of a
+          DLL disguised with a spoofed image content type, and a separate encoded command channel on
+          a non-standard port. Mapped to MITRE ATT&amp;CK (T1071.004, T1036.008, T1105, T1027, T1571).
+        </p>
+        <a href="writeups/attack-of-the-bots.pdf" target="_blank" rel="noopener"
+           style="font-family:var(--font-display); font-size:12px; color:var(--accent-ok);">
+           READ FULL REPORT →
+        </a>
+      </div>
 
       <div class="writeup-card">
         <div class="job-head">
